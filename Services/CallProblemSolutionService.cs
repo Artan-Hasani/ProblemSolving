@@ -14,18 +14,17 @@ namespace ProblemSolving.Services
 
         public void DetectAndCallSolution()
         {
+            var choices = Enum.GetNames(typeof(ProblemSolutionEnums));
+            string[] allChoices = [..choices, "Exit"];
             while (true)
             {
                 var choice = AnsiConsole.Prompt(
                 new SelectionPrompt<string>()
                     .Title("Choose an option:")
                     .PageSize(100)
-                    .AddChoices(new[] {
-                            ProblemSolutionEnums.TwoSumProblem.ToString(),
-                            "Exit"
-                    }));
+                    .AddChoices(allChoices));
 
-                if (Enum.GetNames(typeof(ProblemSolutionEnums)).Contains(choice))
+                if (choices.Contains(choice))
                 {
                     var solution =  _solutions.FirstOrDefault(s => s.For(Enum.Parse<ProblemSolutionEnums>(choice)));
                     if(solution != null) 
